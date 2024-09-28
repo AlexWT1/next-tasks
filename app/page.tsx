@@ -1,7 +1,5 @@
+import { Tasks } from "./components/tasks/tasks";
+
 export default function Home() {
-  return (
-    <main>
-      <h1>content</h1>
-    </main>
-  );
+  return <Tasks />;
 }
