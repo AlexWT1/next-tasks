@@ -3,6 +3,7 @@
 import { useGlobalState } from "@/app/context/global-provider";
 import React from "react";
 import styled from "styled-components";
+import { CreateContent } from "../modals/create-content";
 
 interface Props {
   className?: string;
@@ -10,7 +11,11 @@ interface Props {
 
 export const Tasks: React.FC<Props> = ({ className }) => {
   const { theme } = useGlobalState();
-  return <TaskStyled theme={theme}>Tasks</TaskStyled>;
+  return (
+    <TaskStyled theme={theme}>
+      <CreateContent />
+    </TaskStyled>
+  );
 };
 
 const TaskStyled = styled.main`

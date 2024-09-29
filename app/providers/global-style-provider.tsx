@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { Toaster } from "react-hot-toast";
 import styled from "styled-components";
 
 interface Props {
@@ -8,7 +9,12 @@ interface Props {
 }
 
 export const GlobalStyleProvider = ({ children }: Props) => {
-  return <GlobalStyles>{children}</GlobalStyles>;
+  return (
+    <GlobalStyles>
+      <Toaster />
+      {children}
+    </GlobalStyles>
+  );
 };
 
 const GlobalStyles = styled.div`
