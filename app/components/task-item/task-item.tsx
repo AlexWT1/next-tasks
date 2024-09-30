@@ -1,6 +1,10 @@
 "use client";
 
+import { useGlobalState } from "@/app/context/global-provider";
+import { edit, trash } from "@/app/utils/icons";
 import React from "react";
+import styled from "styled-components";
+import formatDate from "@/app/utils/formatDate";
 
 interface Props {
   title: string;
@@ -17,18 +21,37 @@ export const TaskItem: React.FC<Props> = ({
   isCompleted,
   id,
 }) => {
+  const { theme } = useGlobalState();
   return (
-    <div>
+    <TaskItemStyled theme={theme}>
       <h1>{title}</h1>
       <p>{description}</p>
-      <p className="date">{date}</p>
+      <p className="date">{formatDate(date)}</p>
       <div className="task-footer">
         {isCompleted ? (
           <button className="completed">Completed</button>
         ) : (
           <button className="incompleted">Incompleted</button>
         )}
+        <button className="edit">{edit}</button>
+        <button className="delete">{trash}</button>
       </div>
-    </div>
+    </TaskItemStyled>
   );
 };
+
+const TaskItemStyled = styled.div`
+  padding: 1.2rem 1rem;
+  border-radius: 1rem;
+  background-color: ${(props) => props.theme.borderColor2};
+  box-shadow: ${(props) => props.theme.shadow7};
+  border: 2px solid ${(props) => props.theme.borderColor2};
+
+  height: 16rem;
+  display: flex;
+  flex-direction: column;
+
+  .date {
+    margin-top: auto;
+  }
+`;
