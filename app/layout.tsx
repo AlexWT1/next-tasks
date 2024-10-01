@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Nunito } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "./components/sidebar/sidebar";
 import { GlobalStyleProvider } from "./providers/global-style-provider";
@@ -8,15 +8,10 @@ import { ContextProvider } from "./providers/context-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const nunito = Nunito({
+  subsets: ["latin"],
+  variable: "--font-nunito",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -43,9 +38,7 @@ export default function RootLayout({
             referrerPolicy="no-referrer"
           />
         </head>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className={nunito.className}>
           <ContextProvider>
             <GlobalStyleProvider>
               {userId && <Sidebar />}
