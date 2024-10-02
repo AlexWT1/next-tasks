@@ -7,6 +7,8 @@ import Image from "next/image";
 import menu from "@/app/utils/menu";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { Button } from "../button/button";
+import { logout } from "@/app/utils/icons";
 
 interface Props {
   className?: string;
@@ -48,7 +50,17 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
           );
         })}
       </ul>
-      <button></button>
+      <div className="sign-out relative mb-6">
+        <Button
+          name="Sign out"
+          type="submit"
+          padding="0.4rem 0.8rem"
+          borderRad="0.8rem"
+          fw="500"
+          fs="1.2rem"
+          icon={logout}
+        />
+      </div>
     </SidebarStyled>
   );
 };
@@ -61,6 +73,7 @@ const SidebarStyled = styled.nav`
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
 
   color: ${(props) => props.theme.colorGrey3};
