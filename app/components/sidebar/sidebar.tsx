@@ -9,6 +9,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "../button/button";
 import { logout } from "@/app/utils/icons";
+import { useClerk } from "@clerk/nextjs";
 
 interface Props {
   className?: string;
@@ -18,6 +19,8 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
   const { theme } = useGlobalState();
   const router = useRouter();
   const pathName = usePathname();
+
+  const { signOut } = useClerk();
 
   const handleClick = (link: string) => {
     router.push(link);
@@ -59,6 +62,9 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
           fw="500"
           fs="1.2rem"
           icon={logout}
+          click={() => {
+            signOut(() => router.push("/signin"));
+          }}
         />
       </div>
     </SidebarStyled>

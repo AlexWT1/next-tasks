@@ -32,6 +32,7 @@ export const Button: React.FC<Props> = ({
   border,
 }) => {
   const { theme } = useGlobalState();
+
   return (
     <ButtonStyled
       theme={theme}
@@ -43,7 +44,7 @@ export const Button: React.FC<Props> = ({
         fontSize: fs,
         border: border,
       }}
-      type={type}
+      // type={type}
       onClick={click}
     >
       {icon && icon}

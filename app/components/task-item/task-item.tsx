@@ -21,7 +21,7 @@ export const TaskItem: React.FC<Props> = ({
   isCompleted,
   id,
 }) => {
-  const { theme } = useGlobalState();
+  const { theme, deleteTask } = useGlobalState();
   return (
     <TaskItemStyled theme={theme}>
       <h1>{title}</h1>
@@ -34,7 +34,9 @@ export const TaskItem: React.FC<Props> = ({
           <button className="incompleted">Incompleted</button>
         )}
         <button className="edit">{edit}</button>
-        <button className="delete">{trash}</button>
+        <button className="delete" onClick={() => deleteTask(id)}>
+          {trash}
+        </button>
       </div>
     </TaskItemStyled>
   );

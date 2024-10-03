@@ -4,11 +4,13 @@ import React, { createContext, useState, useContext } from "react";
 import themes from "./theme";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useUser } from "@clerk/nextjs";
 
 export const GlboalContext = createContext();
 export const GlobalUpdateContext = createContext();
 
 export const GlobalProdiver = ({ children }) => {
+    const { user }  = useUser();
     const [selectedTheme, setSelectedTheme] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -28,11 +30,25 @@ export const GlobalProdiver = ({ children }) => {
         }
     }
 
+    const deleteTask = async (id) => {
+        try {
+            const res = await axios.delete(`/api/tasks/${id}`);
+            toast.success("Task deleted successfully");
+
+            allTasks();
+            
+        } catch (error) {
+            console.log(error)
+            toast.error("Something went wrong");
+        }
+    }
+
+
     React.useEffect(() => {
-        allTasks();
-    }, []);
+        if (user) allTasks();
+    }, [user]);
     return (
-        <GlboalContext.Provider value={{ theme, tasks }}>
+        <GlboalContext.Provider value={{ theme, tasks,deleteTask, isLoading }}>
             <GlobalUpdateContext.Provider value={{}}>
                 {children}
             </GlobalUpdateContext.Provider>
