@@ -17,30 +17,23 @@ export const Tasks: React.FC<Props> = ({ title, tasks }) => {
 
   return (
     <TaskStyled theme={theme}>
-      <CreateContent />
       <h1>{title}</h1>
-      {!isLoading ? (
-        <div className="tasks grid">
-          {tasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              title={task.title}
-              description={task.description}
-              date={task.date}
-              isCompleted={task.isCompleted}
-              id={task.id}
-            />
-          ))}
-          <button className="create-task">
-            {plus}
-            Add new tasks
-          </button>
-        </div>
-      ) : (
-        <div className="tasks-loader w-full h-full flex items-center justify-center">
-          <span className="loader"></span>
-        </div>
-      )}
+      <div className="tasks grid">
+        {tasks.map((task) => (
+          <TaskItem
+            key={task.id}
+            title={task.title}
+            description={task.description}
+            date={task.date}
+            isCompleted={task.isCompleted}
+            id={task.id}
+          />
+        ))}
+        <button className="create-task">
+          {plus}
+          Add new tasks
+        </button>
+      </div>
     </TaskStyled>
   );
 };

@@ -9,7 +9,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "../button/button";
 import { logout } from "@/app/utils/icons";
-import { useClerk } from "@clerk/nextjs";
+import { useClerk, UserButton, useUser } from "@clerk/nextjs";
 
 interface Props {
   className?: string;
@@ -17,10 +17,17 @@ interface Props {
 
 export const Sidebar: React.FC<Props> = ({ className }) => {
   const { theme } = useGlobalState();
+  const { signOut } = useClerk();
+  const { user } = useUser();
+
+  const { firstName, lastName, imageUrl } = user || {
+    firstName: "",
+    lastName: "",
+    imageUrl: "",
+  };
+
   const router = useRouter();
   const pathName = usePathname();
-
-  const { signOut } = useClerk();
 
   const handleClick = (link: string) => {
     router.push(link);
@@ -30,11 +37,13 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
     <SidebarStyled theme={theme}>
       <div className="profile">
         <div className="image">
-          <Image width={70} height={70} src="/avatar.png" alt="profile" />
+          <Image width={70} height={70} src={imageUrl} alt="profile" />
         </div>
-        <h1>
-          <span>Alex</span>
-          <span>White</span>
+        <div className="user-btn absolute z-20 top-0 w-full h-full">
+          <UserButton />
+        </div>
+        <h1 className="capitalize">
+          {firstName} {lastName}
         </h1>
         <div className="profile-overlay"></div>
       </div>
@@ -84,6 +93,24 @@ const SidebarStyled = styled.nav`
 
   color: ${(props) => props.theme.colorGrey3};
 
+  .user-btn {
+    .cl-rootBox {
+      width: 100%;
+      height: 100%;
+
+      .cl-userButtonTrigger {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+
+        .cl-userButtonBox {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
   .profile {
     margin: 1.5rem;
     padding: 1rem 0.8rem;
@@ -91,6 +118,7 @@ const SidebarStyled = styled.nav`
 
     border-radius: 1rem;
     cursor: pointer;
+
     font-weight: 500;
     color: ${(props) => props.theme.colorGrey0};
 
@@ -103,11 +131,13 @@ const SidebarStyled = styled.nav`
       left: 0;
       width: 100%;
       height: 100%;
-      backdrop-filter: blur(5px);
-      background-color: ${(props) => props.theme.colorBg3};
+      backdrop-filter: blur(10px);
+      z-index: 0;
+      background: ${(props) => props.theme.colorBg3};
       transition: all 0.55s linear;
       border-radius: 1rem;
       border: 2px solid ${(props) => props.theme.borderColor2};
+
       opacity: 0.2;
     }
 
@@ -129,21 +159,15 @@ const SidebarStyled = styled.nav`
       flex-shrink: 0;
       display: inline-block;
       overflow: hidden;
-      transition: all 0.5s linear;
+      transition: all 0.5s ease;
       border-radius: 100%;
 
       width: 70px;
       height: 70px;
       img {
         border-radius: 100%;
-        transition: all 0.5s linear;
+        transition: all 0.5s ease;
       }
-    }
-
-    > h1 {
-      margin-left: 0.8rem;
-      font-size: clamp(1.2rem, 4vw, 1.4rem);
-      line-height: 100%;
     }
 
     &:hover {
@@ -155,6 +179,12 @@ const SidebarStyled = styled.nav`
       img {
         transform: scale(1.1);
       }
+    }
+
+    > h1 {
+      margin-left: 0.8rem;
+      font-size: clamp(1.2rem, 4vw, 1.4rem);
+      line-height: 100%;
     }
   }
 

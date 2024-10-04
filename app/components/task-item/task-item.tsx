@@ -31,7 +31,7 @@ export const TaskItem: React.FC<Props> = ({
         {isCompleted ? (
           <button className="completed">Completed</button>
         ) : (
-          <button className="incompleted">Incompleted</button>
+          <button className="incompleted">Incomplete</button>
         )}
         <button className="edit">{edit}</button>
         <button className="delete" onClick={() => deleteTask(id)}>
@@ -83,7 +83,7 @@ const TaskItemStyled = styled.div`
     }
 
     .completed,
-    .incommleted {
+    .incompleted {
       display: inline-block;
       padding: 0.4rem 1rem;
       background: ${(props) => props.theme.colorDanger};

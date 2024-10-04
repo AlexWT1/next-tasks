@@ -44,11 +44,17 @@ export const GlobalProdiver = ({ children }) => {
     }
 
 
+    const completedTasks = tasks.filter((task) => task.isCompleted === true);
+    const incompletedTasks = tasks.filter((task) => task.isCompleted === false);
+    const importantTasks = tasks.filter((task) => task.isImportant === true);
+
+
+
     React.useEffect(() => {
         if (user) allTasks();
     }, [user]);
     return (
-        <GlboalContext.Provider value={{ theme, tasks,deleteTask, isLoading }}>
+        <GlboalContext.Provider value={{ theme, tasks,deleteTask, isLoading,completedTasks,incompletedTasks,importantTasks }}>
             <GlobalUpdateContext.Provider value={{}}>
                 {children}
             </GlobalUpdateContext.Provider>
