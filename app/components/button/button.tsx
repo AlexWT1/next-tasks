@@ -16,6 +16,7 @@ interface Props {
   type?: "submit" | "reset" | "button" | undefined;
   blog?: string;
   border?: string;
+  color?: string;
 }
 
 export const Button: React.FC<Props> = ({
@@ -30,6 +31,7 @@ export const Button: React.FC<Props> = ({
   type,
   blog,
   border,
+  color,
 }) => {
   const { theme } = useGlobalState();
 
@@ -43,8 +45,9 @@ export const Button: React.FC<Props> = ({
         fontWeight: fw || "500",
         fontSize: fs,
         border: border,
+        color: color || theme.colorGrey0,
       }}
-      // type={type}
+      type={type}
       onClick={click}
     >
       {icon && icon}
@@ -53,7 +56,7 @@ export const Button: React.FC<Props> = ({
   );
 };
 
-const ButtonStyled = styled.div`
+const ButtonStyled = styled.button`
   position: relative;
   display: flex;
   align-items: center;

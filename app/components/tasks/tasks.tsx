@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { CreateContent } from "../modals/create-content";
 import { TaskItem } from "../task-item/task-item";
 import { plus } from "@/app/utils/icons";
+import { Modal } from "../modals/modal";
 
 interface Props {
   title: string;
@@ -13,10 +14,11 @@ interface Props {
 }
 
 export const Tasks: React.FC<Props> = ({ title, tasks }) => {
-  const { theme, isLoading } = useGlobalState();
+  const { theme, openModal, modal } = useGlobalState();
 
   return (
     <TaskStyled theme={theme}>
+      {modal && <Modal content={<CreateContent />} />}
       <h1>{title}</h1>
       <div className="tasks grid">
         {tasks.map((task) => (
@@ -29,7 +31,7 @@ export const Tasks: React.FC<Props> = ({ title, tasks }) => {
             id={task.id}
           />
         ))}
-        <button className="create-task">
+        <button className="create-task" onClick={openModal}>
           {plus}
           Add new tasks
         </button>
