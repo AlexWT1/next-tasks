@@ -8,7 +8,7 @@ interface Props {
 
 const SignupPage: React.FC<Props> = ({ className }) => {
   return (
-    <div className={className}>
+    <div className="flex items-center justify-center h-full">
       <SignUp />
     </div>
   );

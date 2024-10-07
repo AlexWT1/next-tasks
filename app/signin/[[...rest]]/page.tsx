@@ -9,7 +9,7 @@ interface Props {
 
 const SigninPage: React.FC<Props> = ({ className }) => {
   return (
-    <div className={className}>
+    <div className="flex items-center justify-center h-full">
       <SignIn />
     </div>
   );
